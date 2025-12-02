@@ -4,19 +4,42 @@ class City:
         self.population = population
         self.width = width
         self.height = height
-        self.area = [["1" for i in range(width)] for j in range(height)]
-    def put_building(self, x, y, building):
-        if self.area[y][x] != "1":
-            self.area[y][x] = building
+        self.area = [[" " for _ in range(width)] for _ in range(height)]
+
+    def put_building(self, x, y, building="B"):
+        if 0 <= x < self.width and 0 <= y < self.height:
+            if self.area[y][x] == " ":
+                self.area[y][x] = building
+            else:
+                print(f"Щось вже є на {x},{y}")
         else:
-            print("Building already exists.")
-    def remove_building(self, x, y):
-        if self.area[y][x] != "1":
-            self.area[y][x] = "1"
-        else:
-            print("Building already doesn't exist.")
+            print("Координати поза межами міста")
+
+    def add_street(self, street):
+        for x, y in street.coordinates:
+            if 0 <= x < self.width and 0 <= y < self.height:
+                if self.area[y][x] == "B":
+                    self.area[y][x] = "X"
+                else:
+                    self.area[y][x] = "S"
+
     def __str__(self):
         return "\n".join(" ".join(row) for row in self.area)
 
-city = City("New York", 8000000, 10, 10)
-print(city)
+
+class Location:
+    def __init__(self, name: str, x: int, y: int):
+        self.name = name
+        self.x = x
+        self.y = y
+
+
+class Street:
+    def __init__(self, name: str, coordinates: list[tuple[int,int]]):
+        self.name = name
+        self.coordinates = coordinates
+
+    def random_location(self) -> Location:
+        import random
+        x, y = random.choice(self.coordinates)
+        return Location(f"On {self.name}", x, y)
