@@ -1,54 +1,50 @@
+import asyncio
+
 class Person:
-    def __init__(self, name: str, age: int, criminal_record: bool = False):
+    def __init__(self, name: str, surname: str, age: int, x: int, y: int, criminal_record: bool = False) -> None:
         self.name = name
+        self.surname = surname
         self.age = age
-        self.criminal_record = criminal_record
-
-class Employer(Person):
-    def __init__(self, name: str, age: int, criminal_record: bool = False):
-        super().__init__(name, age, criminal_record)
-        self.position = ""
-        self.rank = ""
-        self.status = "Free"
-        self.location = None
-        self.x = 0
-        self.y = 0
-
-class PoliceOfficer(Employer):
-    def __init__(self, name: str, age: int, criminal_record: bool = False):
-        super().__init__(name, age, criminal_record)
-        self.rank = "Trainee Police"
-        self.position = "Police Officer"
-        self.training = False
-
-class Doctor(Employer):
-    def __init__(self, name: str, age: int, criminal_record: bool):
-        super().__init__(name, age, criminal_record)
-        self.rank = "Trainee Medic"
-        self.position = "Medic"
-        self.experience = 0
-
-class Firefighter(Employer):
-    def __init__(self, name: str, age: int):
-        super().__init__(name, age)
-        self.rank = "Trainee Firefighter"
-        self.position = "Firefighter"
-        self.training = False
-
-class Patient(Person):
-    def __init__(self, name: str, age: int, position: str, degree: int, diagnosis, surgeon_need: bool) -> None:
-        super().__init__(name, age, position)
-        self.degree = degree
-        self.diagnosis = diagnosis
-        self.surgeon_need = surgeon_need
-        self.x = 0
-        self.y = 0
-
-
-class Prisoner(Person):
-    def __init__(self, name: str, age: int, x: int, y: int):
-        super().__init__(name, age, criminal_record=True)
-        self.prison_time = 0
-        self.article = ""
         self.x = x
         self.y = y
+        self.criminal_record = criminal_record
+
+    def __str__(self) -> str:
+        return f"Person: {self.name} {self.surname} has {self.age} y.o and crim is {self.criminal_record}"
+    
+    def ifcrim(self) -> bool:
+        if self.criminal_record:
+            return True
+        else:
+            return False
+    
+class Employyer(Person):
+    def __init__(self, name, surname, age, x, y, criminal_record, rank: str, status: str):
+        super().__init__(name, surname, age, x, y, scriminal_record)
+        self.rank = rank
+        self.status = status
+
+    def __str__(self) -> str:
+        return f"Employyer {self.name} {self.surname} {self.age} y.o status: {self.status}, rank: {self.rank}"
+
+class PoliceOfficer(Employyer):
+    def __init__(self, name, surname, age, x, y, criminal_record, status, rank, trained: bool):
+        super().__init__(name, surname, age, x, y, criminal_record, status, rank)
+        self.trained = trained
+    def __str__(self) -> str:
+        return f"Officer {self.name} {self.surname} {self.age} y.o status: {self.status}, rank: {self.rank}"
+class Doctor(Employyer):
+    def __init__(self, name, surname, age, x, y, criminal_record, status, rank):
+        super().__init__(name, surname, age, x, y, criminal_record, status, rank)
+    
+class Prisoner(Person):
+    def __init__(self, name: str, surname: str, age: int, x: int, y: int, criminal_record: bool, duration: int, rank: str, status: str) -> None:
+        super().__init__(name, surname, age, x, y, criminal_record)
+        self.criminal_record = True
+        self.duration = duration
+
+class Mayor(Employyer):
+    def __init__(self, name, surname, age, x, y, criminal_record, status, rank):
+        super().__init__(name, surname, age, x, y, criminal_record)
+        self.status = status
+        self.rank = rank

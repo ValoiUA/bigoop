@@ -1,45 +1,28 @@
+from person import Person
+
+
 class City:
-    def __init__(self, name, population, width, height):
+    def __init__(self, name: str, areax: int, areay: int, population: int) -> None:
         self.name = name
+        self.areax = areax
+        self.areay = areay
         self.population = population
-        self.width = width
-        self.height = height
-        self.area = [[" " for _ in range(width)] for _ in range(height)]
-
-    def put_building(self, x, y, building="B"):
-        if 0 <= x < self.width and 0 <= y < self.height:
-            if self.area[y][x] == " ":
-                self.area[y][x] = building
-            else:
-                print(f"Щось вже є на {x},{y}")
-        else:
-            print("Координати поза межами міста")
-
-    def add_street(self, street):
-        for x, y in street.coordinates:
-            if 0 <= x < self.width and 0 <= y < self.height:
-                if self.area[y][x] == "B":
-                    self.area[y][x] = "X"
-                else:
-                    self.area[y][x] = "S"
-
-    def __str__(self):
-        return "\n".join(" ".join(row) for row in self.area)
-
-
-class Location:
-    def __init__(self, name: str, x: int, y: int):
+    def __str__(self) -> str:
+        return f"City: {self.name} {self.areax} {self.areay} {self.population}"
+    
+class Street:
+    def __init__(self, name: str, x: int, y:int) -> None:
         self.name = name
         self.x = x
         self.y = y
-
-
-class Street:
-    def __init__(self, name: str, coordinates: list[tuple[int,int]]):
-        self.name = name
-        self.coordinates = coordinates
-
-    def random_location(self) -> Location:
-        import random
-        x, y = random.choice(self.coordinates)
-        return Location(f"On {self.name}", x, y)
+        self.buildings = []
+    def __str__(self) -> str:
+        return f"Street: {self.name} {self.x} {self.y}"
+    
+    def put_buiding(self, building) -> None:
+        if isinstance(building, Police):
+            self.buildings.append(building)
+        
+    def break_building(self, building) -> None:
+        if isinstance(building, Police):
+            self.buildings.remove(building)
