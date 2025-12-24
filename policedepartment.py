@@ -43,7 +43,7 @@ class Police:
             print(f"{person.name} is officer now")
         else:
             print(f"{person.name} is already working")
-    async def remove_officer(self, officer: PoliceOfficer) -> None:
+    def remove_officer(self, officer: PoliceOfficer) -> None:
         try:
             if officer in self.officers:
                 officer.status = "Free"
@@ -52,9 +52,9 @@ class Police:
                 officer.__class__ = Employyer
                 self.officers.remove(officer)
             else:
-                print(f"Officer {officer.name} is not in the police")
+                print(f"Person {officer.name} is not in the police")
         except ValueError:
-            print(f"Officer {officer.name} is not in the police")
+            print(f"Person {officer.name} is not in the police")
     
     def promote_officer(self, officer: PoliceOfficer) -> None:
         try:
@@ -115,9 +115,10 @@ class Police:
     def free_prisoner(self, prisoner: Prisoner):
         if prisoner not in self.prisoners:
             print(f"{prisoner.name} not in prison")
+            prisoner.duration = 0
             prisoner.__class__ = Employyer
             prisoner.status = "Free"
-            prisoner.duration = 0
+            prisoner.rank = "Employyer"
             return
         prisoner.duration = 0
         prisoner.criminal_record = True
@@ -125,13 +126,18 @@ class Police:
             prisoner.__class__ = Employyer
         elif prisoner.rank in self.ranks:
             prisoner.__class__ = PoliceOfficer
+            
         
     #======Callings=======
     def check_if_wall(self, officer: PoliceOfficer, street: Street):
         pass
     async def officer_go(self, officer: PoliceOfficer, timetogo: int, time_staying: int):
+        print(f"officer {officer.name} go to street")
         asyncio.sleep(timetogo)
-        asyncio.sleep(time_staying) 
+        print(f"officer {officer.name} is in the street")
+        asyncio.sleep(time_staying)
+        print(f"officer {officer.name} leave the street")
+        officer.status = "Free"
     
     async def call_police(self, street: Street, article: str):
         time = self.calling[article]
@@ -144,11 +150,13 @@ class Police:
     async def calling_make(self, officer: PoliceOfficer, timetogo: int, timestaying: int):
         asyncio.create_task(self.officer_go(officer, timetogo, timestaying))
 
-
-
-
     
+    #======Patrooling=======
+    def goto_patrol(self, officer: PoliceOfficer):
+        pass
 
+    def check_if_wall(self, officer: PoliceOfficer):
+        pass
 
         
 

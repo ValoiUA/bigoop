@@ -48,3 +48,12 @@ class Mayor(Employyer):
         super().__init__(name, surname, age, x, y, criminal_record)
         self.status = status
         self.rank = rank
+
+class Doctor(Employyer):
+    def __init__(self, name, surname, age, x, y, criminal_record, status, rank):
+        super().__init__(name, surname, age, x, y, criminal_record, status, rank)
+
+
+class Patient(Person):
+    def __init__(self, name: str, surname: str, age: int, x: int, y: int) -> None:
+        super().__init__(name, surname, age, x, y)
