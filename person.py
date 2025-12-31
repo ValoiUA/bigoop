@@ -57,3 +57,11 @@ class Doctor(Employyer):
 class Patient(Person):
     def __init__(self, name: str, surname: str, age: int, x: int, y: int) -> None:
         super().__init__(name, surname, age, x, y)
+
+class LibraryEmployer(Employyer):
+    def __init__(self, name, surname, age, x, y, criminal_record, status, rank):
+        super().__init__(name, surname, age, x, y, criminal_record, status, rank)
+
+class LibraryUser(Person):
+    def __init__(self, name, surname, age, x, y):
+        super().__init__(name, surname, age, x, y)
